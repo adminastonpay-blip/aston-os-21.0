@@ -182,7 +182,7 @@ test("MCP contract blocks mutating tools without mandatory approval", () => {
   }).allowed, false);
   assert.equal(authorizeMcpInvocation({
     identity, tool, policyDecision: { allowed: true },
-    approval: { approved: true, tenantId: "tenant_01" }
+    approval: { approved: true, signatureVerified: true, operatorId: "human_01", tenantId: "tenant_01" }
   }).allowed, true);
 });
 
