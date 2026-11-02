@@ -1,0 +1,31 @@
+name: ASTON OS 21 — verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Syntax and unit tests
+        run: npm run check
+
+# This workflow runs local Node tests only. It does not provision Cloudflare
+# resources, apply D1 migrations, publish secrets, or deploy any Worker.
