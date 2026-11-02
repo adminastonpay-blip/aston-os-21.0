@@ -1,0 +1,13 @@
+# ASTON OS 21.0 — safe starter configuration
+# Deliberately no production bindings or migrations are declared yet.
+# Existing Cloudflare resources must be inventoried and explicitly mapped
+# before adding D1/KV/R2/AI/Durable Objects bindings.
+name = "aston-os-21"
+main = "src/worker.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+[vars]
+ASTON_ENV = "development"
+ASTON_RELEASE = "21.0.0"
+PUBLIC_API_ENABLED = "false"
