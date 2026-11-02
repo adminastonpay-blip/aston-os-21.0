@@ -39,6 +39,7 @@ All newly added engines are code-level modules and provider contracts. They are 
 ## Documentation
 
 - [PDF implementation coverage and remaining gates](docs/PDF-IMPLEMENTATION-COVERAGE.md)
+- [Cloudflare resource and binding matrix](docs/CLOUDFLARE-RESOURCE-MATRIX.md)
 - [PDF architecture mapping](docs/ARCHITECTURE-FROM-PDF.md)
 - [Security review of reference code](docs/SECURITY-REVIEW-PDF-IMPORT.md)
 - [Phase 1 — Foundation](docs/PHASE-1-FOUNDATION.md)
