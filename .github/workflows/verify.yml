@@ -26,6 +26,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Syntax and unit tests
         run: npm run check
+      - name: Validate D1 SQL migrations offline
+        run: python scripts/validate-migrations.py
 
-# This workflow runs local Node tests only. It does not provision Cloudflare
-# resources, apply D1 migrations, publish secrets, or deploy any Worker.
+# This workflow validates local code and SQL only. It does not provision Cloudflare
+# resources, apply D1 migrations remotely, publish secrets, or deploy any Worker.
