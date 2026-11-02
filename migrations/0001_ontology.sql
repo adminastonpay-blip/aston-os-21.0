@@ -1,0 +1,8 @@
+-- ASTON OS 21.0 ontology schema v1. Apply only to a dedicated staging D1 database after review.
+CREATE TABLE IF NOT EXISTS ontology_entities (tenant_id TEXT NOT NULL, entity_id TEXT NOT NULL, entity_type TEXT NOT NULL, properties_json TEXT NOT NULL CHECK (json_valid(properties_json)), schema_version TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, PRIMARY KEY (tenant_id, entity_id));
+CREATE INDEX IF NOT EXISTS idx_ontology_entities_tenant_type ON ontology_entities (tenant_id, entity_type);
+CREATE TABLE IF NOT EXISTS ontology_relationships (tenant_id TEXT NOT NULL, relationship_id TEXT NOT NULL, relationship_type TEXT NOT NULL, from_entity_id TEXT NOT NULL, to_entity_id TEXT NOT NULL, properties_json TEXT NOT NULL DEFAULT '{}' CHECK (json_valid(properties_json)), schema_version TEXT NOT NULL, created_at TEXT NOT NULL, PRIMARY KEY (tenant_id, relationship_id), FOREIGN KEY (tenant_id, from_entity_id) REFERENCES ontology_entities (tenant_id, entity_id), FOREIGN KEY (tenant_id, to_entity_id) REFERENCES ontology_entities (tenant_id, entity_id));
+CREATE INDEX IF NOT EXISTS idx_ontology_relationships_from ON ontology_relationships (tenant_id, from_entity_id);
+CREATE INDEX IF NOT EXISTS idx_ontology_relationships_to ON ontology_relationships (tenant_id, to_entity_id);
+CREATE TABLE IF NOT EXISTS ontology_audit (tenant_id TEXT NOT NULL, audit_id TEXT NOT NULL, actor_id TEXT, action TEXT NOT NULL, object_type TEXT NOT NULL, object_id TEXT NOT NULL, occurred_at TEXT NOT NULL, metadata_json TEXT NOT NULL DEFAULT '{}' CHECK (json_valid(metadata_json)), PRIMARY KEY (tenant_id, audit_id));
+CREATE INDEX IF NOT EXISTS idx_ontology_audit_tenant_time ON ontology_audit (tenant_id, occurred_at);
