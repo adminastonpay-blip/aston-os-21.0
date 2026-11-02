@@ -11,7 +11,7 @@ export function planExecutionLayers(plan){
 export function authorizeToolCall({role,tool,args,allowedTools,mutating=false,approval}){
  if(!Array.isArray(allowedTools)||!allowedTools.includes(tool))return {allowed:false,reason:"tool_not_allowlisted"};
  if(!args||typeof args!=="object"||Array.isArray(args))return {allowed:false,reason:"invalid_tool_arguments"};
- if(mutating&&approval?.approved!==true)return {allowed:false,reason:"human_approval_required"};
+ if(mutating&&(approval?.approved!==true||approval.signatureVerified!==true||!approval.operatorId))return {allowed:false,reason:"human_approval_required"};
  if(mutating&&approval?.tenantId!==args.tenantId)return {allowed:false,reason:"approval_tenant_mismatch"};
  return {allowed:true,role,tool};
 }
