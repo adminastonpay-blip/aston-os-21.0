@@ -24,7 +24,7 @@ test("offline edge mission rejects replay and policy drift",()=>{
 test("maritime safety denies measurements outside deterministic bounds",()=>{
  const input={tenantId:"tenant_01",assetId:"mooring1",measurements:[{metric:"tension",value:80}],limits:{tension:{min:10,max:70}}};
  assert.equal(evaluateMaritimeCondition(input).decision,"deny");
- assert.equal(evaluateMaritimeCondition({...input,measurements:[{metric:"tension",value:50}],operatorApproval:{approved:true,tenantId:"tenant_01"}}).decision,"safe_candidate");
+ assert.equal(evaluateMaritimeCondition({...input,measurements:[{metric:"tension",value:50}],operatorApproval:{approved:true,signatureVerified:true,operatorId:"human_01",tenantId:"tenant_01"}}).decision,"safe_candidate");
 });
 test("satellite command requires signature, revocation and onboard controller",()=>{
  const base={tenantId:"tenant_01",satelliteId:"sat1",command:{tenantId:"tenant_01",satelliteId:"sat1",policyVersion:"v1",executeAtMs:150,risk:"low"},window:{startsAtMs:100,endsAtMs:200},signatureVerified:true,revocationChecked:true,localPolicyVersion:"v1"};
@@ -32,7 +32,7 @@ test("satellite command requires signature, revocation and onboard controller",(
  assert.equal(authorizeSatelliteCommand({...base,revocationChecked:false}).authorized,false);
 });
 test("health data use requires explicit purpose and category consent",()=>{
- const base={tenantId:"tenant_01",subjectId:"person1",purpose:"care",dataCategories:["lab"],consent:{tenantId:"tenant_01",subjectId:"person1",status:"active",validUntilMs:1000,allowedPurposes:["care"],allowedDataCategories:["lab"]},nowMs:100};
+ const base={tenantId:"tenant_01",subjectId:"person1",purpose:"care",dataCategories:["lab"],consent:{tenantId:"tenant_01",subjectId:"person1",status:"active",validUntilMs:1000,allowedPurposes:["care"],allowedDataCategories:["lab"],signatureVerified:true},nowMs:100};
  assert.equal(authorizeHealthDataUse(base).allowed,true);
  assert.equal(authorizeHealthDataUse({...base,purpose:"marketing"}).allowed,false);
 });
