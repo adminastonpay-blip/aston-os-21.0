@@ -54,5 +54,5 @@ test("device attestation never clears emergency stop without separate operator a
  const device={tenantId:"tenant_01",deviceId:"dev1",publicKey:"pub",keyAlgorithm:"ML-DSA-65",safetyProfileId:"safe1",status:"pending_attestation",emergencyStop:true};
  const attested=await verifyDeviceAttestation({device,attestation:{tenantId:"tenant_01",deviceId:"dev1",passed:true},verifier:{verify:async()=>true}});
  assert.equal(attested.verified,true);assert.equal(attested.device.emergencyStop,true);
- assert.equal(releaseEmergencyStop({device:attested.device,operatorApproval:{approved:true,tenantId:"tenant_01",operatorId:"human"},hardwareAcknowledgement:{safeToEnable:true,deviceId:"dev1"}}).released,true);
+ assert.equal(releaseEmergencyStop({device:attested.device,operatorApproval:{approved:true,signatureVerified:true,tenantId:"tenant_01",operatorId:"human"},hardwareAcknowledgement:{safeToEnable:true,signatureVerified:true,deviceId:"dev1"}}).released,true);
 });
