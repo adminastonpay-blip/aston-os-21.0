@@ -6,6 +6,7 @@ export function authorizeSpend(input) {
   for (const n of [amountMinor, spentTodayMinor, spentMonthMinor]) {
     if (!Number.isSafeInteger(n) || n < 0) return deny("invalid_minor_unit_amount");
   }
+  if (typeof policy.currency !== "string" || !Number.isSafeInteger(policy.perTransactionLimitMinor) || policy.perTransactionLimitMinor < 0 || !Number.isSafeInteger(policy.dailyLimitMinor) || policy.dailyLimitMinor < 0 || !Number.isSafeInteger(policy.monthlyLimitMinor) || policy.monthlyLimitMinor < 0) return deny("invalid_spend_policy_limits");
   if (currency !== policy.currency) return deny("currency_mismatch");
   if (!Array.isArray(policy.allowedMerchants) || !policy.allowedMerchants.includes(merchant)) return deny("merchant_not_allowlisted");
   if (amountMinor > policy.perTransactionLimitMinor) return deny("per_transaction_limit_exceeded");
