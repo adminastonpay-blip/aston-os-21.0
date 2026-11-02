@@ -2,56 +2,63 @@
 
 Independent, add-only Cloudflare Workers foundation for a vendor-neutral enterprise decision and trust layer. ES Modules only.
 
-## Start
+## Start locally
 
 ```bash
 npm install
 npm test
 npm run check
+python scripts/validate-migrations.py
 npm run dev
 ```
 
-## Current API surface
+## Current public API
 
-- `GET /health` — runtime health and binding-presence diagnostics.
-- `GET /v1/health` — same health contract under the versioned API.
+- `GET /health` and `GET /v1/health` — health and binding-presence diagnostics.
 - `GET /v1/meta` — release metadata.
 - `GET /v1/ontology/model` — versioned ontology contract.
-- `POST /v1/ontology/validate` — opt-in payload validation; disabled unless `ASTON_ONTOLOGY_VALIDATE_ENABLED=true`.
+- `POST /v1/ontology/validate` — opt-in validation; disabled unless `ASTON_ONTOLOGY_VALIDATE_ENABLED=true`.
 
-New Trust Layer modules are policy/validation contracts, not public API routes. No business write endpoint has been activated.
+All newly added engines are code-level modules and provider contracts. They are not automatically exposed as public endpoints. Business writes, payment execution, media publishing, infrastructure remediation and physical commands remain disabled.
 
-## Added from the ASTON OS 21.0 reference PDF
+## Architecture coverage added from the 108-page reference PDF
 
-- Tenant-scoped deny-by-default ABAC policy evaluation and verified-identity tenant context.
-- Agent registration, bounded task-plan validation, delegation claim validation and fail-closed approvals.
-- Spend policy controls for agent commerce (no payment execution).
-- Jurisdiction/clearance/budget-aware model routing policy (no live model adapter).
-- Tenant-safe ingestion envelope, provenance validation and idempotency metadata.
-- Canonical decision events, SHA-256 fingerprints and verifiable audit-chain helpers.
-- Simulation commit gate with resource version check, independent verification and approval.
-- Media rights, territory and validity-window gate.
-- Physical AI safety interlock policy (no actuator control).
-- MCP tool contract and approval gate (not an MCP server).
-- Limited deterministic PII tokenization helper.
-- Additive D1 schema proposal for Data Fabric, policy, agents, spend, simulation, safety, media, MCP and compliance evidence.
-- Automated Node test workflow without deployment steps.
+- **Trust and identity:** ABAC, policy versioning, Access JWT verification, tenant context, delegation and approval gates.
+- **Data Fabric:** source/job contracts, schema registry, tenant-scoped D1 repository, idempotency, ETL, chunking, embeddings/vector adapter, provenance and forensic journal interface.
+- **Ontology:** entity and relationship validation, graph traversal, bitemporal validity and tenant isolation.
+- **AI:** jurisdiction/clearance/budget-aware model routing, governed inference adapter, model evaluation, tenant-scoped RAG and managed search adapter.
+- **Agents:** bounded DAG planning, task execution layers, agent identity signing interface, MCP handler and A2A message contracts.
+- **Decision Twin:** isolated snapshots, simulated deltas, risk evaluation and a separate commit gate.
+- **Resilience:** mission state machine, approval gates, retry/idempotency contracts and telemetry.
+- **Commerce:** spend limits, x402 policy and independent payment receipt verification interface.
+- **Media:** rights/territory windows, DRM license validation, recording state machine, segment integrity and audience recommendations.
+- **Physical AI:** device attestation, emergency-stop release gate, safety interlock and short-lived signed permit verification interface.
+- **Enterprise runtime:** tenant dispatch policy for Workers for Platforms and isolated sandbox execution policy.
+- **Evidence:** SHA-256 audit chain, Decision Book signing/verifying interfaces and additive SQL proposals.
 
-## Architecture and safety documents
+## Documentation
 
+- [PDF implementation coverage and remaining gates](docs/PDF-IMPLEMENTATION-COVERAGE.md)
+- [PDF architecture mapping](docs/ARCHITECTURE-FROM-PDF.md)
+- [Security review of reference code](docs/SECURITY-REVIEW-PDF-IMPORT.md)
 - [Phase 1 — Foundation](docs/PHASE-1-FOUNDATION.md)
 - [Phase 2 — Ontology Engine](docs/PHASE-2-ONTOLOGY.md)
 - [Phase 3 — Data Fabric](docs/PHASE-3-DATA-FABRIC.md)
-- [PDF architecture mapping](docs/ARCHITECTURE-FROM-PDF.md)
-- [Security review of reference code](docs/SECURITY-REVIEW-PDF-IMPORT.md)
-- [ASTON OS 21.0 implementation roadmap](docs/ROADMAP-21.0.md)
+- [Implementation roadmap](docs/ROADMAP-21.0.md)
 
-## Cloudflare / production boundary
+## Cloudflare and production boundary
 
-No production bindings, Durable Object migrations, queues, secrets, D1 databases, Vectorize indexes, R2 buckets, Workflows, Hyperdrive, Stream, Workers for Platforms, Sandboxes, Wallets or AI Gateway routes are configured by this change. The new SQL migration is a proposal only and has not been applied.
+No Cloudflare resource binding or production secret was added by this implementation branch. D1 migrations 0001–0003 are proposals; CI validates them against an in-memory SQLite database only. There is no remote D1 write, Cloudflare deployment, production migration, Queue/DO/Workflow/Stream/Vectorize/Hyperdrive/AI Gateway/Workers for Platforms/Sandbox/Wallet connection, payment, media publication or actuator call.
 
-The existing ASTON production Worker and its bindings are separate and are not modified by this repository. Do not deploy production or connect existing resources until a binding inventory, dedicated staging environment, authentication review, isolation tests and dry-run approval are complete.
+The previous ASTON Worker and all of its bindings remain outside this repository and are not modified.
 
-## Implementation status
+## Status language
 
-Code being present in GitHub does not mean that it is tested, provisioned or deployed. Run the tests and controlled staging checks before enabling any capability. No certification or competitor-performance claim is made.
+- **Code implemented:** module exists in this repository.
+- **Unit-tested:** the test suite passes for the covered behavior.
+- **Provisioned:** exact Cloudflare resource and binding have been verified.
+- **Staging-integrated:** end-to-end tests pass using the actual staging resource.
+- **Production-enabled:** explicitly approved deployment and runtime health verified.
+- **Certified:** independent assessment completed for a defined scope.
+
+Do not interpret code scaffolding or a unit-test pass as proof of live service integration, production readiness, safety certification, or superiority over another platform.
