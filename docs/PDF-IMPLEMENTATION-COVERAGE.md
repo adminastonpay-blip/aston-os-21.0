@@ -79,3 +79,25 @@ No production bindings, secrets, migration application, deployment, financial tr
 ## Acceptance gates
 
 A pillar is operational only after its provider is connected in a dedicated staging environment, positive and negative tenant-isolation tests pass, failure/timeout behavior is tested, logs and lineage are verified, and the specific production change is approved. A passing unit test validates a contract; it does not prove a cloud service or safety system is live.
+
+## Additional code modules added after the initial coverage pass
+
+The implementation branch also contains:
+- D1 tenant repository with tenant predicates on all exposed read/write methods.
+- ETL pipeline orchestration that masks before embedding, bounds chunking, checks vector output and records provenance.
+- Graph relationship endpoint validation and bitemporal selection.
+- Agent key-provider identity and message sign/verify interfaces.
+- Governed inference call adapter and deterministic model evaluation.
+- MCP JSON-RPC request handler requiring an explicit policy evaluator before tool execution.
+- Decision Book signature/verifier interface and short-lived physical execution permit verifier.
+- Stream DRM license request validation, recording session transitions and segment digest validation.
+- Audience profile and recommendation ranking constrained to tenant-owned published assets.
+- Sandbox egress and high-risk approval policy.
+- x402 payment policy and independent settlement receipt verification.
+- Workers for Platforms dispatch eligibility and generic external adapter manifests.
+- Durable workflow approval event verification with timeout-to-expired (never auto-approve).
+- Offline edge mission replay/policy-version checks; maritime, satellite and health-consent policies.
+- Device attestation and a separate operator-plus-hardware acknowledgement before emergency-stop release.
+- Binding-presence diagnostics expanded to report the PDF's proposed services without exposing values.
+
+These remain code-level engines or adapter contracts. Their respective external providers and Cloudflare resources are not connected in this branch.
