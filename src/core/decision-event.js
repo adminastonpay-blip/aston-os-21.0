@@ -1,4 +1,4 @@
-const REQUIRED = ["eventId", "tenantId", "actorId", "action", "decision", "occurredAtMs"];
+const REQUIRED_TEXT = ["eventId", "tenantId", "actorId", "action", "decision"];
 
 function canonicalize(value) {
   if (value === null || typeof value === "string" || typeof value === "boolean") return value;
@@ -21,7 +21,7 @@ export function validateDecisionEvent(event) {
   if (!event || typeof event !== "object" || Array.isArray(event)) {
     return { valid: false, errors: ["event_must_be_an_object"] };
   }
-  for (const key of REQUIRED) {
+  for (const key of REQUIRED_TEXT) {
     if (typeof event[key] !== "string" || !event[key].trim()) errors.push("missing_" + key);
   }
   if (!Number.isSafeInteger(event.occurredAtMs) || event.occurredAtMs <= 0) errors.push("invalid_occurredAtMs");
