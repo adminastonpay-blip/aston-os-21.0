@@ -5,6 +5,7 @@ export function buildAudienceProfile(events,{tenantId,viewerId}={}){
  return {valid:true,profile:{tenantId,viewerId,genreScores:scores,eventCount:relevant.length}};
 }
 export function rankRecommendations({profile,candidates,tenantId,excludeAssetIds=[]}){
+ profile=profile?.profile??profile;
  if(!profile||profile.tenantId!==tenantId||!Array.isArray(candidates))return [];
  const excluded=new Set(excludeAssetIds);
  return candidates.filter(c=>c.tenantId===tenantId&&c.status==="published"&&!excluded.has(c.assetId))
