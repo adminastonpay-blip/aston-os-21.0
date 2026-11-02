@@ -56,7 +56,7 @@ test("orchestrator creates dependency layers and guards mutating tools",()=>{
  const p=planExecutionLayers({tasks:[{role:"analyst",goal:"A",dependsOn:[]},{role:"verifier",goal:"B",dependsOn:[0]},{role:"analyst",goal:"C",dependsOn:[]}]});
  assert.equal(p.valid,true);assert.deepEqual(p.layers,[[0,2],[1]]);
  assert.equal(authorizeToolCall({role:"executor",tool:"write",args:{tenantId:"tenant_01"},allowedTools:["write"],mutating:true}).allowed,false);
- assert.equal(authorizeToolCall({role:"executor",tool:"write",args:{tenantId:"tenant_01"},allowedTools:["write"],mutating:true,approval:{approved:true,tenantId:"tenant_01"}}).allowed,true);
+ assert.equal(authorizeToolCall({role:"executor",tool:"write",args:{tenantId:"tenant_01"},allowedTools:["write"],mutating:true,approval:{approved:true,signatureVerified:true,operatorId:"human_01",tenantId:"tenant_01"}}).allowed,true);
 });
 test("Decision Twin applies only tenant-scoped simulated deltas",()=>{
  const s=createSimulationSnapshot({tenantId:"tenant_01",resourceId:"asset_1",version:3,properties:{state:"on",count:1}});
