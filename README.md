@@ -23,19 +23,19 @@ New Trust Layer modules are policy/validation contracts, not public API routes. 
 
 ## Added from the ASTON OS 21.0 reference PDF
 
-- Tenant-scoped deny-by-default ABAC policy evaluation.
-- Agent registration and delegation claim validation.
+- Tenant-scoped deny-by-default ABAC policy evaluation and verified-identity tenant context.
+- Agent registration, bounded task-plan validation, delegation claim validation and fail-closed approvals.
 - Spend policy controls for agent commerce (no payment execution).
 - Jurisdiction/clearance/budget-aware model routing policy (no live model adapter).
-- Tenant-safe ingestion envelope and idempotency validation.
-- Canonical decision event validation and SHA-256 fingerprinting.
+- Tenant-safe ingestion envelope, provenance validation and idempotency metadata.
+- Canonical decision events, SHA-256 fingerprints and verifiable audit-chain helpers.
 - Simulation commit gate with resource version check, independent verification and approval.
 - Media rights, territory and validity-window gate.
 - Physical AI safety interlock policy (no actuator control).
 - MCP tool contract and approval gate (not an MCP server).
 - Limited deterministic PII tokenization helper.
 - Additive D1 schema proposal for Data Fabric, policy, agents, spend, simulation, safety, media, MCP and compliance evidence.
-- Unit tests for the policy and validation contracts.
+- Automated Node test workflow without deployment steps.
 
 ## Architecture and safety documents
 
@@ -44,6 +44,7 @@ New Trust Layer modules are policy/validation contracts, not public API routes. 
 - [Phase 3 — Data Fabric](docs/PHASE-3-DATA-FABRIC.md)
 - [PDF architecture mapping](docs/ARCHITECTURE-FROM-PDF.md)
 - [Security review of reference code](docs/SECURITY-REVIEW-PDF-IMPORT.md)
+- [ASTON OS 21.0 implementation roadmap](docs/ROADMAP-21.0.md)
 
 ## Cloudflare / production boundary
 
