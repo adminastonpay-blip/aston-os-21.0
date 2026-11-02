@@ -13,7 +13,7 @@ export async function verifyDeviceAttestation({device,attestation,verifier}){
 }
 export function releaseEmergencyStop({device,operatorApproval,hardwareAcknowledgement}){
  if(!device||device.status!=="active"||device.emergencyStop!==true)return {released:false,reason:"device_not_in_stopped_active_state"};
- if(operatorApproval?.approved!==true||operatorApproval.tenantId!==device.tenantId||!operatorApproval.operatorId)return {released:false,reason:"operator_approval_required"};
- if(hardwareAcknowledgement?.safeToEnable!==true||hardwareAcknowledgement.deviceId!==device.deviceId)return {released:false,reason:"hardware_safety_acknowledgement_required"};
+ if(operatorApproval?.approved!==true||operatorApproval.signatureVerified!==true||operatorApproval.tenantId!==device.tenantId||!operatorApproval.operatorId)return {released:false,reason:"operator_approval_required"};
+ if(hardwareAcknowledgement?.safeToEnable!==true||hardwareAcknowledgement.signatureVerified!==true||hardwareAcknowledgement.deviceId!==device.deviceId)return {released:false,reason:"hardware_safety_acknowledgement_required"};
  return {released:true,device:{...device,emergencyStop:false}};
 }
