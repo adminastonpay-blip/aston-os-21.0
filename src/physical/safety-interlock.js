@@ -21,8 +21,8 @@ export function evaluatePhysicalCommand({ identity, device, command, policy, sim
       simulation.deviceId !== device.deviceId ||
       simulation.tenantId !== identity.tenantId) return deny("verified_simulation_required");
   if (["high", "critical"].includes(command.risk) &&
-      (!command.approval || command.approval.approved !== true ||
-       command.approval.tenantId !== identity.tenantId)) {
+      (!command.approval || command.approval.approved !== true || command.approval.signatureVerified !== true ||
+       command.approval.tenantId !== identity.tenantId || !command.approval.operatorId)) {
     return { decision: "approval_required", permitCandidate: false, reasons: ["human_approval_required"] };
   }
   return {

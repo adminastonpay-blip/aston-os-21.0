@@ -21,8 +21,8 @@ export function authorizeMcpInvocation({ identity, tool, policyDecision, approva
   if (!identity || !tool || !policyDecision) return { allowed: false, reason: "invalid_invocation_context" };
   if (policyDecision.allowed !== true) return { allowed: false, reason: "policy_denied" };
   if (tool.mutating === true &&
-      (!tool.requiresHumanApproval || !approval || approval.approved !== true ||
-       approval.tenantId !== identity.tenantId)) {
+      (!tool.requiresHumanApproval || !approval || approval.approved !== true || approval.signatureVerified !== true ||
+       !approval.operatorId || approval.tenantId !== identity.tenantId)) {
     return { allowed: false, reason: "mutating_tool_approval_required" };
   }
   return { allowed: true, reason: "authorized_by_policy" };

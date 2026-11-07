@@ -37,6 +37,16 @@ def main() -> None:
             "aston_safety_decisions",
             "aston_mcp_tools",
             "aston_compliance_evidence",
+            "aston_schema_registry",
+            "aston_idempotency",
+            "aston_lineage_events",
+            "aston_graph_edges",
+            "aston_session_messages",
+            "aston_missions",
+            "aston_approval_records",
+            "aston_stream_assets",
+            "aston_telemetry_events",
+            "aston_external_adapters",
         }
         actual = {
             row[0]

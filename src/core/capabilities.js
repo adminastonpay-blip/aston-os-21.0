@@ -11,6 +11,26 @@ export function getRuntimeCapabilities(env = {}) {
     session_do: Boolean(env.ASTON_SESSION),
     rate_limiter_do: Boolean(env.ASTON_RATE_LIMITER),
     ledger_lock_do: Boolean(env.ASTON_LEDGER_LOCK),
-    agent_do: Boolean(env.ASTON_AGENT)
+    agent_do: Boolean(env.ASTON_AGENT),
+    hyperdrive: Boolean(env.HYPERDRIVE),
+    journal_r2: Boolean(env.JOURNAL),
+    etl_queue: Boolean(env.ETL_QUEUE),
+    missions_queue: Boolean(env.MISSIONS),
+    etl_dead_letter_queue: Boolean(env.ETL_DLQ),
+    missions_dead_letter_queue: Boolean(env.MISSIONS_DLQ),
+    recovery_workflow: Boolean(env.RECOVERY_WF),
+    session_memory_do: Boolean(env.SESSION),
+    graph_resolver_do: Boolean(env.GRAPH),
+    supervisor_do: Boolean(env.SUPERVISOR),
+    agent_node_do: Boolean(env.AGENT),
+    simulation_twin_do: Boolean(env.SIMULATION),
+    mission_brain_do: Boolean(env.MISSION),
+    managed_search: Boolean(env.AI_SEARCH),
+    stream: Boolean(env.STREAM),
+    tenant_dispatch: Boolean(env.DISPATCHER),
+    sandbox: Boolean(env.SANDBOX),
+    basin: Boolean(env.BASIN),
+    kv_instant: Boolean(env.KV_INSTANT),
+    wallets: Boolean(env.WALLETS)
   };
 }
